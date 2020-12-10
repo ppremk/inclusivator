@@ -60,6 +60,11 @@ const labels = ['non-inclusivity-detected!']
       issue_number = context.payload.issues.number
     }
 
+    // Get Issue or Pull Request
+    if (event_type === 'issue_comment') {
+      issue_number = context.payload.issue.number
+    }
+
     core.info(`The ${event_type} number is: ${issue_number}`)
 
     // TODO Logic for detecting spam/non inclusive language
