@@ -47,7 +47,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "ncc build index.js -m",
+    "build": "ncc build index.js",
     "pretest": "npx eslint-config-prettier .eslintrc.json",
     "test": "eslint .",
     "start": "node ./index.js"
