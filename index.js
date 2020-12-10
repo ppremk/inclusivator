@@ -71,15 +71,31 @@ const labels = ['non-inclusivity-detected!']
         process.exit(0)
     }
 
-    console.log({issue_number, title, body})
-    process.exit(0)
+    let titleScore = 0
+    if (title !== '') {
+      const {
+        attributeScores: {
+          TOXICITY: {
+            summaryScore: {value}
+          }
+        }
+      } = await perspective.analyze(title, {truncate: true})
+      titleScore = value
+    }
 
-    const {attributeScores} = await perspective.analyze(body, {truncate: true})
-    // TODO check title
+    let bodyScore = 0
+    if (body !== '') {
+      const {
+        attributeScores: {
+          TOXICITY: {
+            summaryScore: {value}
+          }
+        }
+      } = await perspective.analyze(body, {truncate: true})
+      bodyScore = value
+    }
 
-    const {value} = attributeScores.TOXICITY.summaryScore
-
-    if (value >= tba) {
+    if (titleScore >= tba || bodyScore >= tba) {
       await octokit.issues.addLabels({
         owner,
         repo,
@@ -91,9 +107,7 @@ const labels = ['non-inclusivity-detected!']
         owner,
         repo,
         issue_number,
-        body: `## :warning: Possible non inclusive language detected :warning:
-
-Dude! cmon.. u can do better.. check the Code of Conduct pls!`
+        body: `## :warning: Possible non inclusive language detected :warning:`
       })
 
       core.setOutput(`Non inclusivity detected! Setting Issue or PR status to flaged.`)
