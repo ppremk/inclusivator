@@ -55,26 +55,30 @@ const labels = ['non-inclusivity-detected!']
     }
 
     let issue_number
+    let title
     let body
 
     switch (event_type) {
       case 'issues':
         issue_number = context.payload.issue.number
-        console.log(event_type, context.payload.issue)
+        title = context.payload.issue.title
+        body = context.payload.issue.body
         break
       case 'issue_comment':
         issue_number = context.payload.issue.number
-        console.log(event_type, context.payload.comment)
+        body = context.payload.comment.body
         break
       case 'pull_request':
         issue_number = context.payload.pull_request.number
-        console.log(event_type, context.payload.pull_request)
+        title = context.payload.pull_request.title
+        body = context.payload.pull_request.body
         break
       default:
         core.setOutput('no parsable data found...exiting')
         process.exit(0)
     }
 
+    console.log({issue_number, title, body})
     process.exit(0)
 
     core.debug(`The ${event_type} number is: ${issue_number}`)
@@ -100,6 +104,7 @@ const labels = ['non-inclusivity-detected!']
     console.log(context.payload.pull_request || context.payload.issue || context.payload.comment)
 
     const {attributeScores} = await perspective.analyze(body, {truncate: true})
+    // TODO check title
 
     const {value} = attributeScores.TOXICITY.summaryScore
 
