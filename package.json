@@ -1,35 +1,68 @@
 {
-  "name": "LFS-warning",
+  "name": "inclusivator",
   "version": "1.0.0",
-  "description": "LFS Warning GitHub Action",
-  "main": "index.js",
-  "scripts": {
-    "lint": "eslint index.js",
-    "package": "ncc build index.js -o dist",
-    "test": "eslint index.js && jest"
+  "description": "",
+  "keywords": [],
+  "author": {
+    "name": "GitHub Professional Services",
+    "email": "services@github.com",
+    "url": "https://services.github.com"
   },
+  "contributors": [
+    {
+      "name": "Bassem Dghaidi",
+      "email": "link-@github.com",
+      "url": "https://github.com/link-"
+    },
+    {
+      "name": "Mala Kumar",
+      "email": "malakumar85@github.com",
+      "url": "https://github.com/malakumar85"
+    },
+    {
+      "name": "Prem Kumar Ponuthorai",
+      "email": "ppremk@github.com",
+      "url": "https://github.com/ppremk"
+    },
+    {
+      "name": "Stefan Stölzle",
+      "email": "stoe@github.com",
+      "url": "https://github.com/stoe"
+    }
+  ],
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ppremk/lfs-warning.git"
+    "url": "ssh://git@github.com/ppremk/inclusivator.git"
   },
-  "keywords": [
-    "GitHub",
-    "Actions",
-    "JavaScript"
-  ],
-  "author": "ppremk",
-  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ppremk/lfs-warning/issues"
+    "url": "https://github.com/ppremk/inclusivator/issues"
   },
-  "homepage": "https://github.com/ppremk/lfs-warning#readme",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "engines": {
+    "node": ">=12",
+    "npm": ">=6"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "ncc build index.js -m",
+    "pretest": "npx eslint-config-prettier .eslintrc.json",
+    "test": "eslint .",
+    "start": "node ./index.js"
+  },
   "dependencies": {
     "@actions/core": "^1.2.6",
-    "@actions/github": "^2.1.1"
+    "@actions/github": "^4.0.0",
+    "perspective-api-client": "^3.1.0"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.20.5",
-    "eslint": "^6.3.0",
-    "jest": "^24.9.0"
-  }
+    "@github/prettier-config": "^0.0.4",
+    "@vercel/ncc": "^0.25.1",
+    "eslint": "^7.15.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-github": "^4.1.1"
+  },
+  "prettier": "@github/prettier-config"
 }
