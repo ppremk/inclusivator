@@ -6,9 +6,9 @@ inputs:
     description: Token used to fetch the repository
     default: ${{ github.token }}
   tba:  # id of input 
-    description: 'Default reply text'
+    description: 'Default score point'
     required: true
-    default: 'Dude! cmon.. u can do better.. check the Code of Conduct pls!'
+    default: '.5'
 runs:
   using: 'node12'
   main: 'dist/index.js'
