@@ -52,12 +52,17 @@ const labels = ['non-inclusivity-detected!']
 
     switch (event_type) {
       case 'issues':
+        issue_number = context.payload.issue.number
         break
       case 'issue_comment':
+        issue_number = context.payload.issue.number
         break
       case 'pull_request':
         issue_number = context.payload.pull_request.number
         break
+      default:
+        core.setOutput('no parsable data found...exiting')
+        process.exit(0)
     }
     console.log(context.payload.pull_request || context.payload.issue || context.payload.comment)
 
