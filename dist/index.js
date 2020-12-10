@@ -71,7 +71,7 @@ const labels = ['non-inclusivity-detected!']
         core.setOutput('no parsable data found...exiting')
         process.exit(0)
     }
-    console.log(context.payload.pull_request || context.payload.issue || context.payload.comment)
+    console.log(event_type, context.payload.pull_request || context.payload.issue || context.payload.comment)
 
     process.exit(0)
 
