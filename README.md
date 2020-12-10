@@ -9,7 +9,7 @@
 
 #### `tba `
 
-Required, set's the file size limit threshold in bytes. Default "10MB".
+Required, set's the non-inclusivity threshold in bytes. Default ".5".
 
 #### `token `
 
