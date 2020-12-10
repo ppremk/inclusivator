@@ -1,4 +1,4 @@
-name: LFS-warning
+name: Inclusivator-check
 
 on:
   pull_request:
@@ -7,9 +7,9 @@ on:
     types: [created, edited]
 
 jobs:
-  lfs-warning:
+  inclusivator-warning:
 
-    name: LFS Warning
+    name: Inclusivator-check
     runs-on: ubuntu-latest
 
     steps:
@@ -17,8 +17,8 @@ jobs:
         id: get_repo_code
         uses: actions/checkout@v2
 
-      - name: LFS Warning
-        id: lfs_warning
+      - name: Inclusivator-check
+        id: inclusivator_check
         uses: ./
         with:
-          filesizelimit: 10485760 # 10MB
+          tba: 'Dude! cmon.. u can do better.. check the Code of Conduct pls!' # Reply text
