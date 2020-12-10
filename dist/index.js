@@ -55,6 +55,7 @@ const labels = ['non-inclusivity-detected!']
     }
 
     let issue_number
+    let body
 
     // Get Issue or Pull Request
     if (event_type === 'pull_request') {
@@ -66,10 +67,16 @@ const labels = ['non-inclusivity-detected!']
       issue_number = context.payload.issue.number
     }
 
+    if (event_type === 'issues') {
+      body = context.payload.issue.body
+    }
+
+    if (event_type === 'issue_comment') {
+      body = context.payload.comment
+    }
+
     core.debug(`The ${event_type} number is: ${issue_number}`)
 
-    // TODO Logic for detecting spam/non inclusive language
-    const {body} = context.payload.comment
     const {attributeScores} = await perspective.analyze(body, {truncate: true})
 
     const {value} = attributeScores.TOXICITY.summaryScore
