@@ -13,8 +13,8 @@ const labels = ['non-inclusivity-detected!']
   try {
     const tba = core.getInput('tba', {required: true})
 
-    const myToken = core.getInput('token')
-    const octokit = new github.GitHub(myToken)
+    const token = core.getInput('token')
+    const octokit = new github.getOctokit(token)
 
     const perspective = new Perspective({
       apiKey: process.env.PERSPECTIVE_API_KEY
