@@ -1,17 +1,14 @@
-name: 'LFS-warning'
-description: 'Checks file sizes in a Pull Request and warns of large files'
+name: 'inclusivator'
+description: 'Checks for non inclusive comments'
 inputs:
   token:
     required: false
     description: Token used to fetch the repository
     default: ${{ github.token }}
-  filesizelimit:  # id of input 
-    description: 'file size limit threshold'
+  tba:  # id of input 
+    description: 'Default reply text'
     required: true
-    default: '10485760' # 10 MB is 10485760 Bytes 
-outputs:
-  lfsFiles: # output will be available to future steps 
-    description: 'Array of possible detected large file(s)'
+    default: 'Dude! cmon.. u can do better.. check the Code of Conduct pls!'
 runs:
   using: 'node12'
   main: 'dist/index.js'
