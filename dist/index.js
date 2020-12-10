@@ -55,14 +55,14 @@ const labels = ['non-inclusivity-detected!']
     }
 
     let issue_number
-    let title
+    let title = ''
     let body
 
     switch (event_type) {
       case 'issues':
         issue_number = context.payload.issue.number
         title = context.payload.issue.title
-        body = context.payload.issue.body
+        body = context.payload.issue.body || ''
         break
       case 'issue_comment':
         issue_number = context.payload.issue.number
@@ -71,7 +71,7 @@ const labels = ['non-inclusivity-detected!']
       case 'pull_request':
         issue_number = context.payload.pull_request.number
         title = context.payload.pull_request.title
-        body = context.payload.pull_request.body
+        body = context.payload.pull_request.body || ''
         break
       default:
         core.setOutput('no parsable data found...exiting')
@@ -80,28 +80,6 @@ const labels = ['non-inclusivity-detected!']
 
     console.log({issue_number, title, body})
     process.exit(0)
-
-    core.debug(`The ${event_type} number is: ${issue_number}`)
-
-    // Get Issue or Pull Request
-    if (event_type === 'pull_request') {
-      issue_number = context.payload.pull_request.number
-    }
-
-    // Get Issue or Pull Request
-    if (event_type === 'issues' || event_type === 'issue_comment') {
-      issue_number = context.payload.issue.number
-    }
-
-    if (event_type === 'issues') {
-      body = context.payload.issue.body
-    }
-
-    if (event_type === 'issue_comment') {
-      body = context.payload.comment
-    }
-
-    console.log(context.payload.pull_request || context.payload.issue || context.payload.comment)
 
     const {attributeScores} = await perspective.analyze(body, {truncate: true})
     // TODO check title
