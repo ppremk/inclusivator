@@ -10,7 +10,7 @@ const github = __webpack_require__(5438)
 
 const Perspective = __webpack_require__(2869)
 
-const {context} = github
+const context = github.context
 const {owner, repo} = context.repo
 const event_type = context.eventName
 
@@ -27,9 +27,9 @@ const labels = ['non-inclusivity-detected!']
       apiKey: process.env.PERSPECTIVE_API_KEY
     })
 
-    core.debug(`Default configured reply comment is set to ${tba} ...`)
-    core.debug(`Name of Repository is ${repo} and the owner is ${owner}`)
-    core.debug(`Triggered event is ${event_type}`)
+    core.info(`Default configured reply comment is set to ${tba} ...`)
+    core.info(`Name of Repository is ${repo} and the owner is ${owner}`)
+    core.info(`Triggered event is ${event_type}`)
 
     try {
       await octokit.issues.getLabel({
@@ -47,14 +47,15 @@ const labels = ['non-inclusivity-detected!']
           description: 'Non inclusive language is detected in the commits of a Issue or Pull Request'
         })
 
-        core.debug(`No non-inclusivity label detected. Creating new label ...`)
-        core.debug(`Warning label created`)
+        core.info(`No non-inclusivity label detected. Creating new label ...`)
+        core.info(`Warning label created`)
       } else {
         core.error(`getLabel error: ${err.message}`)
       }
     }
 
     let issue_number
+    console.log(context.payload)
 
     // Get Issue or Pull Request
     if (event_type === 'pull_request') {
@@ -66,7 +67,7 @@ const labels = ['non-inclusivity-detected!']
       issue_number = context.payload.issues.number
     }
 
-    core.debug(`The ${event_type} number is: ${issue_number}`)
+    core.info(`The ${event_type} number is: ${issue_number}`)
 
     // TODO Logic for detecting spam/non inclusive language
     const {body} = context.payload.comment
