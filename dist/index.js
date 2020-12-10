@@ -57,6 +57,21 @@ const labels = ['non-inclusivity-detected!']
     let issue_number
     let body
 
+    switch (event_type) {
+      case 'issues':
+        break
+      case 'issue_comment':
+        break
+      case 'pull_request':
+        issue_number = context.payload.pull_request.number
+        break
+    }
+    console.log(context.payload.pull_request || context.payload.issue || context.payload.comment)
+
+    process.exit(0)
+
+    core.debug(`The ${event_type} number is: ${issue_number}`)
+
     // Get Issue or Pull Request
     if (event_type === 'pull_request') {
       issue_number = context.payload.pull_request.number
@@ -75,7 +90,7 @@ const labels = ['non-inclusivity-detected!']
       body = context.payload.comment
     }
 
-    core.debug(`The ${event_type} number is: ${issue_number}`)
+    console.log(context.payload.pull_request || context.payload.issue || context.payload.comment)
 
     const {attributeScores} = await perspective.analyze(body, {truncate: true})
 
