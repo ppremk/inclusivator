@@ -48,7 +48,7 @@ const labels = ['non-inclusivity-detected!']
     }
 
     let issue_number
-    console.log(context.payload)
+    console.log(context.payload.pull_request || context.payload.issue || {})
 
     // Get Issue or Pull Request
     if (event_type === 'pull_request') {
